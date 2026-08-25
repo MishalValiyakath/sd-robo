@@ -1,0 +1,10 @@
+# Core runtime dependencies for sd-robo
+flask
+pydantic
+langchain
+langchain-core
+
+# Model provider integrations (needed based on chosen model alias)
+langchain-openai
+langchain-anthropic
+langchain-google-genai

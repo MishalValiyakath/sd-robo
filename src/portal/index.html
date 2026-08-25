@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Dynamics Agent Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader hidden">
+    <div class="page-loader-card">
+      <div class="loader-spinner"></div>
+      <p>Generating system dynamics model…</p>
+    </div>
+  </div>
+
+  <div class="page-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">System Dynamics</p>
+        <h1>SD Robo</h1>
+        <!-- <p class="subtitle">Turn any problem statement into a clear, actionable causal loop model in seconds.</p> -->
+      </div>
+    </header>
+
+    <main>
+      <div id="left-panel" class="content-grid">
+        <section class="panel form-panel">
+          <form id="sd-form">
+            <label for="model">Underlying LLM Model</label>
+            <select id="model" name="model"></select>
+
+            <label for="query">Problem statement</label>
+            <textarea id="query" name="query" rows="8" placeholder="Describe a one liner problem statement..."></textarea>
+
+            <button id="submit-button" type="submit">Generate causal model</button>
+            <div id="status" class="status"></div>
+          </form>
+        </section>
+      </div>
+
+      <button
+        id="toggle-left-panel"
+        type="button"
+        class="panel-collapse-toggle"
+        aria-controls="left-panel"
+        aria-expanded="true"
+        aria-label="Collapse left panel"
+        title="Collapse left panel"
+      >
+        <span aria-hidden="true">&lt;</span>
+      </button>
+
+      <section class="panel tabbed-results">
+        <div class="tab-buttons" role="tablist" aria-label="Model views">
+          <button type="button" class="tab-button active" data-tab="summary">Summary</button>
+          <button type="button" class="tab-button" data-tab="cld">CLD</button>
+          <button type="button" class="tab-button" data-tab="json">JSON Output</button>
+        </div>
+
+        <div id="tab-summary" class="tab-content active">
+          <div class="result-header">
+            <h2>Detected system elements</h2>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h3>Boundary Conditions</h3>
+              <ul id="summary-boundaries" class="summary-list"></ul>
+            </div>
+            <div class="summary-card">
+              <h3>Variables</h3>
+              <ul id="summary-variables" class="summary-list"></ul>
+            </div>
+            <div class="summary-card">
+              <h3>Relationships</h3>
+              <ul id="summary-relationships" class="summary-list"></ul>
+            </div>
+            <div class="summary-card">
+              <h3>Dynamic Hypotheses</h3>
+              <ul id="summary-hypotheses" class="summary-list"></ul>
+            </div>
+            <div class="summary-card">
+              <h3>Loops</h3>
+              <ul id="summary-loops" class="summary-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-cld" class="tab-content">
+          <div class="result-header">
+            <h2>Causal loop diagram</h2>
+            <div class="diagram-controls" role="group" aria-label="Diagram zoom controls">
+              <button id="zoom-out-button" type="button" class="diagram-control-button">Zoom Out</button>
+              <button id="zoom-in-button" type="button" class="diagram-control-button">Zoom In</button>
+            </div>
+          </div>
+          <section class="cld-legend" aria-label="Causal loop legend">
+            <h3>Legend</h3>
+            <div class="cld-legend-grid">
+              <div class="cld-legend-item">
+                <span class="cld-legend-node" aria-hidden="true">Variable</span>
+                <span>Oval node: system variable.</span>
+              </div>
+              <div class="cld-legend-item">
+                <span class="cld-legend-swatch arrow-positive" aria-hidden="true"></span>
+                <span>Positive causal link (+): when source increases, target tends to increase.</span>
+              </div>
+              <div class="cld-legend-item">
+                <span class="cld-legend-swatch arrow-negative" aria-hidden="true"></span>
+                <span>Negative causal link (-): when source increases, target tends to decrease.</span>
+              </div>
+              <div class="cld-legend-item">
+                <span class="cld-legend-symbol" aria-hidden="true">⏳</span>
+                <span>Delay marker: effect is delayed over time.</span>
+              </div>
+            </div>
+          </section>
+          <div id="diagram-loading" class="diagram-loading hidden">Generating causal loop diagram…</div>
+          <div id="diagram-output" class="diagram-output">The diagram will appear here after the agent returns a valid model.</div>
+        </div>
+
+        <div id="tab-json" class="tab-content">
+          <div class="result-card">
+            <div class="result-header">
+              <h2>JSON response</h2>
+              <button id="copy-button" type="button" class="secondary-button">Copy JSON</button>
+            </div>
+            <pre id="json-output" class="output">Enter a problem statement and press the button to generate the model.</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p class="footer-meta">Active agent version: <strong id="portal-version">v1</strong></p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/cytoscape@3.29.2/dist/cytoscape.min.js"></script>
+  <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+  <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

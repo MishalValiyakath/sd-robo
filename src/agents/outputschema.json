@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org",
+  "title": "SystemDynamicsModelSchema",
+  "type": "object",
+  "required": [
+    "boundary_conditions",
+    "dynamic_hypotheses",
+    "loops",
+    "relationships",
+    "variables"
+  ],
+  "properties": {
+    "boundary_conditions": {
+      "type": "object",
+      "required": [
+        "excluded",
+        "included",
+        "summary",
+        "time_horizon"
+      ],
+      "properties": {
+        "excluded": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "included": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "summary": { "type": "string" },
+        "time_horizon": { "type": "string" }
+      }
+    },
+    "dynamic_hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "confidence",
+          "hypothesis",
+          "linked_loops",
+          "linked_variables"
+        ],
+        "properties": {
+          "confidence": { "type": "number" },
+          "hypothesis": { "type": "string" },
+          "linked_loops": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "linked_variables": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "loops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "explanation",
+          "id",
+          "name",
+          "polarity",
+          "type",
+          "variables"
+        ],
+        "properties": {
+          "explanation": { "type": "string" },
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "polarity": { 
+            "type": "string",
+            "enum": ["R", "B"]
+          },
+          "type": { 
+            "type": "string",
+            "enum": ["Reinforcing", "Balancing"] 
+          },
+          "variables": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "confidence",
+          "delay",
+          "explanation",
+          "polarity",
+          "source",
+          "target"
+        ],
+        "properties": {
+          "confidence": { "type": "number" },
+          "delay": { "type": "boolean" },
+          "explanation": { "type": "string" },
+          "polarity": { 
+            "type": "string",
+            "enum": ["+", "-"]
+          },
+          "source": { "type": "string" },
+          "target": { "type": "string" }
+        }
+      }
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description",
+          "name",
+          "type"
+        ],
+        "properties": {
+          "description": { "type": "string" },
+          "name": { "type": "string" },
+          "type": { 
+            "type": "string",
+            "enum": ["Stock", "Flow", "Auxiliary"]
+          }
+        }
+      }
+    }
+  }
+}
