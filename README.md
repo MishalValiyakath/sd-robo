@@ -4,6 +4,8 @@ SD Robo is an AI-assisted System Dynamics modelling framework for causal knowled
 
 At the centre of the framework is **SD Agent**, the modelling engine that identifies a system boundary, variables, causal relationships, feedback loops, time delays, and testable dynamic hypotheses. The generated output is intended to support early-stage model development and should be reviewed by people with relevant domain and System Dynamics expertise before it informs decisions.
 
+**Pluggable LLM providers:** SD Robo decouples its modelling workflow from the underlying LLM. A supported model alias can be selected at runtime to run the same SD Agent workflow with OpenAI, Anthropic, or other compatible provider models configured in [src/agents/model_aliases.py](src/agents/model_aliases.py).
+
 This open-source project was developed as part of academic research into AI-assisted System Dynamics modelling. Please cite the project using [CITATION.cff](CITATION.cff) when it contributes to academic work.
 
 ## 1. High-Level Design
