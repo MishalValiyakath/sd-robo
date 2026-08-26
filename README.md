@@ -33,6 +33,8 @@ The structured response includes:
 - `loops`: reinforcing (`R`) and balancing (`B`) feedback structures.
 - `dynamic_hypotheses`: testable behaviour-over-time hypotheses linked to variables and loops.
 
+The complete response contract is documented in [src/agents/outputschema.json](src/agents/outputschema.json). See the [sample population growth output](output_samples/Scenario%20-%20Population%20Growth%20Dynamics.json) for a representative generated model output.
+
 ### Agent Versions
 
 | Version | Approach | When to use it |

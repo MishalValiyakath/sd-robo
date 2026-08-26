@@ -1,0 +1,213 @@
+{
+  "boundary_conditions": {
+    "excluded": [
+      "International migration",
+      "Detailed age structure and cohort dynamics",
+      "Political shocks, conflict, pandemics, and climate disasters",
+      "Regional differences within the country"
+    ],
+    "included": [
+      "Population stock and demographic flows of births and deaths",
+      "Fertility influences from education and family planning access",
+      "Mortality influences from healthcare access and economic resources per capita",
+      "Resource pressure created by population growth"
+    ],
+    "summary": "Model focuses on long-term population change in a developing country driven by births, deaths, education, healthcare, and resource pressure.",
+    "time_horizon": "10 to 50 years"
+  },
+  "dynamic_hypotheses": [
+    {
+      "confidence": 0.82,
+      "hypothesis": "If fertility remains high, population will grow exponentially until mortality or resource constraints become stronger.",
+      "linked_loops": [
+        "R1",
+        "B1"
+      ],
+      "linked_variables": [
+        "Population",
+        "Births",
+        "Fertility Rate",
+        "Economic Resources per Capita",
+        "Deaths"
+      ]
+    },
+    {
+      "confidence": 0.78,
+      "hypothesis": "If education and family planning access improve steadily, fertility will decline after a delay, slowing population growth over the long term.",
+      "linked_loops": [
+        "R1"
+      ],
+      "linked_variables": [
+        "Education and Family Planning Access",
+        "Fertility Rate",
+        "Births",
+        "Population"
+      ]
+    },
+    {
+      "confidence": 0.74,
+      "hypothesis": "If population grows faster than economic resources, resources per capita will fall, reducing healthcare access and increasing deaths, which counteracts further population growth.",
+      "linked_loops": [
+        "B1"
+      ],
+      "linked_variables": [
+        "Population",
+        "Economic Resources per Capita",
+        "Healthcare Access",
+        "Mortality Rate",
+        "Deaths"
+      ]
+    }
+  ],
+  "loops": [
+    {
+      "explanation": "More population leads to more births, and more births further increase population.",
+      "id": "R1",
+      "name": "Population Growth Through Births",
+      "polarity": "R",
+      "type": "Reinforcing",
+      "variables": [
+        "Population",
+        "Births"
+      ]
+    },
+    {
+      "explanation": "Population growth reduces resources per capita, which weakens healthcare access, increases mortality and deaths, and thereby slows or reduces population growth.",
+      "id": "B1",
+      "name": "Resource-Constrained Mortality Adjustment",
+      "polarity": "B",
+      "type": "Balancing",
+      "variables": [
+        "Population",
+        "Economic Resources per Capita",
+        "Healthcare Access",
+        "Mortality Rate",
+        "Deaths"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "confidence": 0.95,
+      "delay": false,
+      "explanation": "A larger population generally produces more births, all else equal.",
+      "polarity": "+",
+      "source": "Population",
+      "target": "Births"
+    },
+    {
+      "confidence": 1,
+      "delay": false,
+      "explanation": "Births add people to the population stock.",
+      "polarity": "+",
+      "source": "Births",
+      "target": "Population"
+    },
+    {
+      "confidence": 0.95,
+      "delay": false,
+      "explanation": "Higher fertility increases the birth flow.",
+      "polarity": "+",
+      "source": "Fertility Rate",
+      "target": "Births"
+    },
+    {
+      "confidence": 0.85,
+      "delay": true,
+      "explanation": "Improved education and family planning tend to reduce fertility, often after social and behavioural delays.",
+      "polarity": "-",
+      "source": "Education and Family Planning Access",
+      "target": "Fertility Rate"
+    },
+    {
+      "confidence": 0.95,
+      "delay": false,
+      "explanation": "A larger population generally produces more deaths, all else equal.",
+      "polarity": "+",
+      "source": "Population",
+      "target": "Deaths"
+    },
+    {
+      "confidence": 1,
+      "delay": false,
+      "explanation": "Deaths remove people from the population stock.",
+      "polarity": "-",
+      "source": "Deaths",
+      "target": "Population"
+    },
+    {
+      "confidence": 0.95,
+      "delay": false,
+      "explanation": "Higher mortality increases the death flow.",
+      "polarity": "+",
+      "source": "Mortality Rate",
+      "target": "Deaths"
+    },
+    {
+      "confidence": 0.9,
+      "delay": true,
+      "explanation": "Better healthcare access reduces mortality, though health outcomes improve with some delay.",
+      "polarity": "-",
+      "source": "Healthcare Access",
+      "target": "Mortality Rate"
+    },
+    {
+      "confidence": 0.75,
+      "delay": true,
+      "explanation": "As population rises, available resources per person tend to fall unless total resources grow proportionally.",
+      "polarity": "-",
+      "source": "Population",
+      "target": "Economic Resources per Capita"
+    },
+    {
+      "confidence": 0.7,
+      "delay": true,
+      "explanation": "Higher resources per person can support better access to healthcare over time.",
+      "polarity": "+",
+      "source": "Economic Resources per Capita",
+      "target": "Healthcare Access"
+    }
+  ],
+  "variables": [
+    {
+      "description": "Total number of people living in the country.",
+      "name": "Population",
+      "type": "Stock"
+    },
+    {
+      "description": "Rate at which new people are added to the population.",
+      "name": "Births",
+      "type": "Flow"
+    },
+    {
+      "description": "Rate at which people are removed from the population through mortality.",
+      "name": "Deaths",
+      "type": "Flow"
+    },
+    {
+      "description": "Average tendency for people of reproductive age to have children.",
+      "name": "Fertility Rate",
+      "type": "Auxiliary"
+    },
+    {
+      "description": "Average likelihood of death in the population.",
+      "name": "Mortality Rate",
+      "type": "Auxiliary"
+    },
+    {
+      "description": "Availability and use of schooling, reproductive health information, and contraception.",
+      "name": "Education and Family Planning Access",
+      "type": "Auxiliary"
+    },
+    {
+      "description": "Availability and affordability of preventive and curative healthcare services.",
+      "name": "Healthcare Access",
+      "type": "Auxiliary"
+    },
+    {
+      "description": "Average economic resources available per person, reflecting resource pressure from population size.",
+      "name": "Economic Resources per Capita",
+      "type": "Auxiliary"
+    }
+  ]
+}
