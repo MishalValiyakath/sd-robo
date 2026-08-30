@@ -8,9 +8,13 @@ At the centre of the framework is **SD Agent**, the modelling engine that identi
 
 This open-source project was developed as part of academic research into AI-assisted System Dynamics modelling. Please cite the project using [CITATION.cff](CITATION.cff) when it contributes to academic work.
 
+## SD Robo Demo
+
+Watch SD Robo in action here in this [YouTube Video](https://youtu.be/Nrcwp5LhcTc)
+
 ## 1. High-Level Design
 
-SD Robo provides three ways to work with SD Agent: a browser portal (_recommended_), a Flask API, and a command-line interface. Each accepts a problem statement and a model alias, then invokes the latest agent version (_v2, unless mentioned explicitly_) to return a shared, schema-constrained causal model.
+SD Robo provides three ways to work with SD Agent: a browser portal (_recommended_), a Flask API, and a command-line interface. Each accepts a problem statement and a model alias, then invokes the latest agent version (_**v2** by default, an improved retrieval-augmented agent with RAG capabilities_) to return a shared, schema-constrained causal model.
 
 ```mermaid
 flowchart LR
@@ -40,11 +44,11 @@ The complete response contract is documented in [src/agents/outputschema.json](s
 | Version | Approach | When to use it |
 | --- | --- | --- |
 | `v1` | Baseline agent that reasons directly from the problem statement and returns a structured model. | Fast exploratory modelling and baseline comparisons. |
-| `v2` | Retrieval-augmented (RAG) agent that retrieves relevant local domain specific knowledge before producing the same structured model. | Context-aware modelling grounded in the supplied knowledge source. |
+| `v2` (**Recommended**) | Improved retrieval-augmented (RAG) agent that retrieves relevant local domain-specific knowledge before producing a richer structured model. | Context-aware, higher-quality modelling grounded in the supplied knowledge source. Default for all unversioned routes. |
 
-`v2` is the default for unversioned portal and API routes. Its retrieval tool selects relevant sections from [src/rag_sources/system_dynamics_knowledge.md](src/rag_sources/system_dynamics_knowledge.md); it does not require a separate vector database or embedding service.
+**v2 is the recommended default.** Its retrieval tool selects relevant sections from [src/rag_sources/system_dynamics_knowledge.md](src/rag_sources/system_dynamics_knowledge.md) and does not require a separate vector database or embedding service.
 
-Use explicit versions through `/v1`, `/v2`, or `/api/v1/...` and `/api/v2/...` routes.
+To explicitly use v1 for comparison or baseline testing, access `/v1`, or use `/api/v1/...` and `/api/v2/...` routes.
 
 ## 2. Codebase Overview
 
